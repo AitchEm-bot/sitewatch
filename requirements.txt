@@ -1,0 +1,8 @@
+streamlit>=1.32
+streamlit-webrtc>=0.47
+tornado>=6.4  # transitive dep of streamlit-webrtc; recent streamlit (uvicorn) no longer pulls it
+ultralytics>=8.1
+opencv-python>=4.9
+numpy>=1.24
+av>=11.0
+pytest>=8.0

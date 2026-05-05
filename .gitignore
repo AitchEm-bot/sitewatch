@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Editors
+.vscode/
+.idea/
+
+# Project artefacts
+models/*.pt
+!models/.gitkeep
+logs/*
+!logs/.gitkeep
+benchmarks/*.json
+
+# OS
+.DS_Store
+Thumbs.db
