@@ -77,7 +77,7 @@ pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
 streamlit run app.py
 ```
 
-The app opens in your default browser at `http://localhost:8501`.
+The app opens in your default browser at `http://localhost:8501`. If encountering errors, make sure to run the streamlit within the .venv you created by activating it following the steps mentioned before.
 
 - **Live monitoring tab**: grant camera access; the system processes your webcam feed in real time.
 - **Review footage tab**: upload a `.jpg`, `.png`, `.mp4`, or `.avi` file for offline analysis.
@@ -180,7 +180,7 @@ The current prototype operates on a single camera feed and produces immediate, r
 
 | Name | Student ID | Role |
 |---|---|---|
-| [Your Name] | [Your ID] | [Your role — e.g., Lead Developer] |
+| Hani Moustafa | 8960215 | Lead Developer & Project Manager |
 | [Teammate 2] | [ID] | [Role] |
 | [Teammate 3] | [ID] | [Role] |
 | [Teammate 4] | [ID] | [Role] |
