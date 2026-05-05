@@ -60,6 +60,17 @@ source .venv/bin/activate          # macOS / Linux
 pip install -r requirements.txt
 ```
 
+#### Optional: GPU acceleration
+
+`requirements.txt` pulls the CPU-only PyTorch wheel by default, which works everywhere but limits the live tab to ~3–5 FPS. If you have an NVIDIA GPU with CUDA drivers installed, replace the torch install with the matching CUDA wheel for a ~10× speed-up:
+
+```bash
+pip uninstall -y torch torchvision torchaudio
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+```
+
+(Adjust `cu124` to match your installed CUDA version — see [PyTorch's install matrix](https://pytorch.org/get-started/locally/). The reported benchmarks below were measured on the CUDA 12.4 build.)
+
 ### Run
 
 ```bash
@@ -71,7 +82,7 @@ The app opens in your default browser at `http://localhost:8501`.
 - **Live monitoring tab**: grant camera access; the system processes your webcam feed in real time.
 - **Review footage tab**: upload a `.jpg`, `.png`, `.mp4`, or `.avi` file for offline analysis.
 
-The custom YOLO model (`models/sitewatch_best.pt`) is optional on first run — the app falls back to COCO-only detection until you train the custom model. See "Training the custom model" below.
+The custom fine-tuned YOLOv8m weights (`models/sitewatch_best.pt`) are bundled with the repository, so PPE classes (`Hardhat`, `NO-Hardhat`, `Safety Vest`, etc.) work immediately. The COCO YOLOv8n baseline (`models/yolov8n.pt`) is auto-downloaded on first detector init. To re-train the custom model from scratch, see "Training the custom model" below.
 
 ---
 

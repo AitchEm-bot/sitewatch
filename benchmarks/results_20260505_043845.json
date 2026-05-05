@@ -1,0 +1,43 @@
+{
+  "video": "C:\\Users\\ha_nn\\Desktop\\Coding\\Projects\\sitewatch\\tests\\fixtures\\demo.mp4",
+  "frames": 200,
+  "elapsed_sec": 119.017,
+  "avg_fps": 1.68,
+  "stages_ms": {
+    "enhancement": {
+      "p50": 154.18,
+      "p95": 171.66,
+      "mean": 157.43
+    },
+    "detection": {
+      "p50": 26.5,
+      "p95": 28.67,
+      "mean": 30.56
+    },
+    "shapes": {
+      "p50": 41.95,
+      "p95": 48.5,
+      "mean": 42.69
+    },
+    "motion": {
+      "p50": 322.5,
+      "p95": 380.4,
+      "mean": 331.12
+    },
+    "fusion": {
+      "p50": 0.01,
+      "p95": 0.01,
+      "mean": 0.01
+    },
+    "drawing": {
+      "p50": 15.65,
+      "p95": 18.19,
+      "mean": 15.93
+    },
+    "total": {
+      "p50": 564.44,
+      "p95": 628.16,
+      "mean": 577.74
+    }
+  }
+}

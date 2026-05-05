@@ -11,11 +11,13 @@ venv/
 .idea/
 
 # Project artefacts
+# Ignore pretrained YOLO weights (auto-downloaded by ultralytics) but keep the
+# fine-tuned custom weights so the app works out of the box on a fresh clone.
 models/*.pt
 !models/.gitkeep
+!models/sitewatch_best.pt
 logs/*
 !logs/.gitkeep
-benchmarks/*.json
 
 # OS
 .DS_Store
