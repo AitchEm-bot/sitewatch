@@ -191,4 +191,4 @@ CSCI435 — Spring 2026 — Dr. Patrick Mukala
 
 ## License
 
-This project is submitted as coursework for CSCI435 at UOWD. Pre-trained models and datasets are used under their respective licenses (cited above). Original code by the authors.
+Original source code in this repository is released under the MIT License — see [`LICENSE`](LICENSE) for the full text. Bundled and referenced components (Ultralytics YOLOv8 under AGPL-3.0, the Roboflow Construction Site Safety dataset, the COCO dataset) remain subject to their own licenses; the `LICENSE` file enumerates them. Submitted as coursework for CSCI435 at UOWD.
