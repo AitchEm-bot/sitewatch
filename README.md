@@ -178,12 +178,15 @@ The current prototype operates on a single camera feed and produces immediate, r
 
 ## Authors
 
-| Name | Student ID | Role |
-|---|---|---|
-| Hani Moustafa | 8960215 | Lead Developer & Project Manager |
-| [Teammate 2] | [ID] | [Role] |
-| [Teammate 3] | [ID] | [Role] |
-| [Teammate 4] | [ID] | [Role] |
+| Name | Role |
+|---|---|
+| Hani Moustafa | Developer |
+| Ibrahim Abdelkarim | Developer |
+| Majid Sharaf | Developer |
+| Ali Almaharif | Developer |
+| Masleen Castleton | Developer |
+
+All authors contributed equally to the project.
 
 CSCI435 — Spring 2026 — Dr. Patrick Mukala
 

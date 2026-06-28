@@ -2,7 +2,7 @@
 
 *Real-time computer-vision pipeline for personal protective equipment compliance and worker–machinery proximity alerting*
 
-**Authors:** Hani Moustafa (8960215); [PLACEHOLDER — additional team members and IDs]
+**Authors:** Hani Moustafa; Ibrahim Abdelkarim; Majid Sharaf; Ali Almaharif; Masleen Castleton
 
 **Subject:** CSCI435 — Computer Vision Algorithms and Systems
 
@@ -318,13 +318,13 @@ The four screenshots illustrate the four CV capabilities operating in their inte
 
 ## 5. Individual contributions
 
-| Name | Student ID | Tasks | Approximate % |
-|---|---|---|---|
-| [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] |
-| [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] |
-| [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] |
-| [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] |
-| [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] | [PLACEHOLDER] |
+| Name | Tasks | Approximate % |
+|---|---|---|
+| Hani Moustafa | Decision fusion and alert prioritisation; Streamlit app integration; project coordination | 20% |
+| Ibrahim Abdelkarim | Object detection module (COCO + custom YOLO) and model training notebook | 20% |
+| Majid Sharaf | Image enhancement (CLAHE / denoise) and shape detection (Hough) | 20% |
+| Ali Almaharif | Motion and change detection (MOG2 + morphology + proximity alerting) | 20% |
+| Masleen Castleton | Benchmarking, test suite, and report writing | 20% |
 
 ---
 
