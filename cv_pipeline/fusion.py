@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import csv
 import datetime as dt
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -14,6 +15,25 @@ from cv_pipeline.motion import MotionRegion, ProximityViolation
 
 LOG_PATH = Path("logs/violations.csv")
 _DEDUP_WINDOW_SEC = 4.0
+
+# dedup_key -> monotonic timestamp of the last time that key was logged. Lets us
+# write the same violation, at the same spot, at most once per _DEDUP_WINDOW_SEC
+# instead of once per frame.
+_last_logged: dict[str, float] = {}
+
+
+def _should_log(dedup_key: str, now: float) -> bool:
+    """Return True if ``dedup_key`` has not been logged within the dedup window."""
+    last = _last_logged.get(dedup_key)
+    if last is not None and now - last < _DEDUP_WINDOW_SEC:
+        return False
+    _last_logged[dedup_key] = now
+    # Prune aged-out keys so the map doesn't grow without bound in a long session.
+    if len(_last_logged) > 512:
+        cutoff = now - _DEDUP_WINDOW_SEC
+        for stale in [k for k, t in _last_logged.items() if t < cutoff]:
+            del _last_logged[stale]
+    return True
 
 
 @dataclass
@@ -62,9 +82,16 @@ def fuse(
     hat_confirmations: dict[tuple[int, int, int, int], bool] | None = None,
     *,
     log: bool = True,
+    dedup: bool = True,
 ) -> list[Announcement]:
     """Apply rule-ordered fusion and return ranked announcements (highest
-    priority first). Every announcement is appended to the violation log."""
+    priority first). The full ranked list is always returned so the on-screen
+    overlay keeps showing an active violation.
+
+    When ``dedup`` is True (the default, for continuous video/live streams) each
+    distinct announcement (by dedup_key) is logged at most once per
+    ``_DEDUP_WINDOW_SEC``. Pass ``dedup=False`` for a one-shot analysis such as a
+    single uploaded image, where every announcement should always be logged."""
     detections = list(detections)
     motion_regions = list(motion_regions)
     proximity_violations = list(proximity_violations)
@@ -146,6 +173,8 @@ def fuse(
 
     out.sort(key=lambda a: a.priority)
     if log:
+        now = time.monotonic()
         for a in out:
-            _append_log(a)
+            if not dedup or _should_log(a.dedup_key, now):
+                _append_log(a)
     return out

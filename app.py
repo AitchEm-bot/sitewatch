@@ -36,6 +36,7 @@ def process_frame(
     *,
     do_enhance: bool,
     do_motion: bool,
+    do_dedup: bool = True,
 ) -> tuple[np.ndarray, list, list, list]:
     img = enhance(frame) if do_enhance else frame
     dets = detector.detect(img)
@@ -46,7 +47,7 @@ def process_frame(
         proximity = motion.check_proximity(persons, regions)
     else:
         regions, proximity = [], []
-    anns = fuse(dets, regions, proximity)
+    anns = fuse(dets, regions, proximity, dedup=do_dedup)
     overlay = draw_overlay(img, dets, regions, anns, proximity)
     return overlay, dets, anns, proximity
 
@@ -67,14 +68,21 @@ do_motion = st.sidebar.toggle("Enable motion detection", value=True)
 conf_threshold = st.sidebar.slider("Detection confidence", 0.2, 0.8, 0.4, 0.05)
 proximity_px = st.sidebar.slider("Proximity alert distance (px)", 50, 200, 80, 5)
 
-with st.sidebar.expander("Recent violation log", expanded=False):
-    if LOG_PATH.exists():
+def render_violation_log() -> None:
+    """Render the recent-violations table in the sidebar.
+
+    Called at the *end* of the script so it reflects anything logged during this
+    run (e.g. a freshly uploaded image), rather than the pre-processing state.
+    """
+    with st.sidebar.expander("Recent violation log", expanded=False):
         rows: list[list[str]] = []
-        with LOG_PATH.open("r", encoding="utf-8") as f:
-            reader = csv.reader(f)
-            header = next(reader, None)
-            for row in reader:
-                rows.append(row)
+        header: list[str] | None = None
+        if LOG_PATH.exists():
+            with LOG_PATH.open("r", encoding="utf-8") as f:
+                reader = csv.reader(f)
+                header = next(reader, None)
+                for row in reader:
+                    rows.append(row)
         rows = rows[-20:][::-1]
         if rows:
             st.dataframe(
@@ -84,8 +92,6 @@ with st.sidebar.expander("Recent violation log", expanded=False):
             )
         else:
             st.caption("No violations logged yet.")
-    else:
-        st.caption("No violations logged yet.")
 
 
 # ----- shared resources ----------------------------------------------------
@@ -199,7 +205,8 @@ with tab_review:
                 img = _resize_long_edge(img)
                 motion = MotionDetector(proximity_threshold=proximity_px)
                 overlay, dets, anns, _prox = process_frame(
-                    img, detector, motion, do_enhance=do_enhance, do_motion=False
+                    img, detector, motion, do_enhance=do_enhance, do_motion=False,
+                    do_dedup=False,
                 )
                 st.image(cv2.cvtColor(overlay, cv2.COLOR_BGR2RGB), use_container_width=True)
                 st.write(f"{len(dets)} detections, {len(anns)} alerts")
@@ -240,3 +247,8 @@ with tab_review:
                 st.success(
                     f"Processed {idx} frames. {violation_count} critical/warning alerts."
                 )
+
+
+# Render the sidebar violation log last, so it includes anything logged during
+# this run (e.g. a just-uploaded image) instead of only the pre-processing state.
+render_violation_log()
